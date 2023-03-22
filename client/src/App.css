@@ -1,0 +1,113 @@
+.app {
+  display: flex;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.hero__section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  padding: 2rem;
+  box-sizing: border-box;
+  background: rgb(34, 193, 195);
+  /* background: linear-gradient(
+    323deg,
+    #bec9f5 0%,
+    #bec8f5 100%
+  ); */
+}
+.hero__section > img {
+  box-shadow: inset;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  object-fit: cover;
+  scale: 1.5;
+  position: relative;
+}
+
+.hero__title {
+  font-size: 4rem;
+  line-height: 4rem;
+  margin: 0;
+}
+.hero__subtext {
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes bounce {
+  0% {
+    scale: 0.8;
+  }
+  50% {
+    scale: 1;
+  }
+  100% {
+    scale: 0.8;
+  }
+}
+
+.file__input__section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input[type="file"] {
+  /* display: none; */
+}
+.custom__file__upload__label {
+  border: 3px dashed #ccc;
+  /* display: flex; */
+  padding: 6px 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+  width: 500px;
+  max-width: 500px;
+  padding: 2rem;
+  margin: 0;
+  border-radius: 0.5rem;
+}
+
+.custom__file__upload__label:hover {
+  opacity: 0.5;
+  transition: 0.4s;
+  border-color: aqua;
+}
+
+.remove__file__btn {
+  color: red;
+  align-self: end;
+  margin-bottom: 0.5rem;
+  transition: opacity 0.6 ease-in-out;
+}
+.remove__file__btn:hover {
+cursor: pointer;
+opacity: 0.6;
+
+}
+
+button {
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 0;
+  border: 0;
+  background: rgb(34, 193, 195);
+  margin-top: 1rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
