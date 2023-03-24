@@ -29,18 +29,15 @@ app.post("/api/process-file", (req: Request, res: Response) => {
       .json({ status: 400, message: "Invalid image or image data" });
   }
 
-  
   // image buffer
   const buffer = Buffer.from(req.body.base64IMG, "base64");
 
-
-   // read image using tessaract worker
+  // read image using tessaract worker
   processFile(req, res, (err) => {
-
-    if(err){
+    if (err) {
       return res
-      .status(400)
-      .json({ status: 400, message: "Image processing failed" });
+        .status(400)
+        .json({ status: 400, message: "Image processing failed" });
     }
 
     (async () => {
@@ -51,18 +48,19 @@ app.post("/api/process-file", (req: Request, res: Response) => {
         data: { text, pdf },
       } = await worker.recognize(buffer, { pdfTitle: "Test" }, { pdf: true });
 
-// create pdf, store file on local disk and send response with pdf URl and image text
+      // create pdf, store file on local disk and send response with pdf URl and image text
       fs.writeFileSync(
-        `${__dirname}/pdfs/tesseract-ocr-result.pdf`,
+        `${__dirname}/pdfs/skannr-image-to-pdf.pdf`,
         Buffer.from(pdf as any)
       );
 
       res.send({
         text,
-        pdfURL: `${__dirname}/pdfs/tesseract-ocr-result.pdf`,
+        pdfURL: `${__dirname}/pdfs/skannr-image-to-pdf.pdf`,
       });
       await worker.terminate();
     })();
+    // return;
   });
 });
 
