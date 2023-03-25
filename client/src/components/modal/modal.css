@@ -1,0 +1,29 @@
+.image__text__modal__wrapper {
+    display: flex;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.693);
+    cursor: pointer;
+    min-width: 100vw;
+    min-height: 100vh;
+    box-sizing: border-box;
+    z-index: 5;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .image__text__modal {
+    cursor: default;
+    background-color: var(--white);
+    border-radius: 0.8rem;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    color: var(--black);
+    max-width: 800px;
+    width: 800px;
+    max-height: 80vh;
+    overflow-y: scroll;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+  }

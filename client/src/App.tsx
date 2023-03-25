@@ -1,28 +1,21 @@
 import axios from "axios";
-import { CloseSquare, DocumentText, Image, Scan } from "iconsax-react";
+import { DocumentText, Scan } from "iconsax-react";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import heroImage from "./assets/hero3.png";
+import { imageData } from "./components/file-Input/file-input.types";
+import { FileInput } from "./components/file-Input/FileInput";
 import { Modal } from "./components/modal/Modal";
-import { errorMessage, successMessage } from "./utils/toast";
+import { errorMessage } from "./utils/toast";
+
 
 function App() {
-  const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isLoading, setisLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [ImageData, setImageData] = useState<{
-    text: string;
-    PDF_URL: string;
-    pdf: BlobPart[];
-  } | null>();
+  const [imageData, setImageData] = useState<imageData | null>();
   const [imageBase64String, setImageBase64String] = useState<string[]>([]);
- 
-
-
-
-  
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,8 +40,6 @@ function App() {
       setisLoading(false);
     }
   };
-
-
 
   const downloadPDF = async () => {
     try {
@@ -76,8 +67,7 @@ function App() {
         <Modal
           setIsModalOpen={setIsModalOpen}
           downloadPDF={downloadPDF}
-         
-          imageDataText={ImageData?.text || ""}
+          imageDataText={imageData?.text || ""}
         />
       )}
       <div className="hero__section">
@@ -100,93 +90,15 @@ function App() {
           </p>
         </div>
       </div>
-      <div className="file__input__section">
-        <form
-          className="form"
-          onSubmit={(e) => onSubmit(e)}
-          encType="multipart/form-data"
-        >
-          {imageBase64String.length && (
-            <button
-              className="remove__file__btn"
-              onClick={() => {
-                setIsDragging(false);
-                setImageBase64String([]);
-                setImageData(null);
-              }}
-            >
-              Remove Image <CloseSquare size="32" />
-            </button>
-          )}
-          <label
-            htmlFor="file-upload"
-            className="custom__file__upload__label"
-            style={{
-              opacity: isInputActive() ? 0.5 : 1,
-              backgroundColor: isInputActive() ? "#fdfdfd14" : "transparent",
-              backgroundImage: imageBase64String.length
-                ? `url(${imageBase64String.join()})`
-                : "",
-              backgroundSize: "cover",
-            }}
-            onDrop={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              const dt = e.dataTransfer;
-              handleChange(dt.files && dt.files[0]);
-            }}
-            onDragOver={(e) => {
-              dragging(e);
-            }}
-            onDragEnter={(e) => {
-              cancelDragging(e);
-            }}
-            onDragLeave={(e) => {
-              cancelDragging(e);
-            }}
-            onDragEnd={(e) => {
-              cancelDragging(e);
-            }}
-            onDragEndCapture={(e) => {
-              cancelDragging(e);
-            }}
-          >
-            {isLoading ? (
-              <Scan size="100" className="scan__loader" />
-            ) : (
-              <Image size="32" color="#FF8A65" />
-            )}{" "}
-            <br></br>
-            {!imageBase64String.length && "Browse or Drop File Here"}
-          </label>
-          <input
-            name="file"
-            hidden
-            type="file"
-            placeholder="drop file"
-            className="input"
-            id="file-upload"
-            onChange={(e) => {
-              if (e.target.files?.length) {
-                handleChange(e.target.files[0]);
-              }
-            }}
-            disabled={isLoading}
-          />
-          {!!ImageData && (
-            <button onClick={() => setIsModalOpen(true)}>
-              View Image Text
-            </button>
-          )}
-          <button
-            type="submit"
-            disabled={!imageBase64String || isLoading || !!ImageData}
-          >
-            {isLoading ? `Reading text...` : "Convert"}
-            {isLoading && <Scan size="32" className="scan__loader" />}
-          </button>
-        </form>
-      </div>
+      <FileInput
+        setImageBase64String={setImageBase64String}
+        imageBase64String={imageBase64String}
+        onSubmit={onSubmit}
+        isLoading={isLoading}
+        setIsModalOpen={setIsModalOpen}
+        setImageData={setImageData}
+        imageData={imageData}
+      />
       <ToastContainer />
     </div>
   );

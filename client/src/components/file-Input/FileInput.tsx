@@ -1,15 +1,17 @@
 import { CloseSquare, Image, Scan } from "iconsax-react";
 import { FC, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
 import { FileInputProps } from "./file-input.types";
 
-export const FileInput:FC<FileInputProps> = ({onSubmit, setImageData}) => {
+export const FileInput: FC<FileInputProps> = ({
+  onSubmit,
+  setImageData,
+  setIsModalOpen,
+  isLoading,
+  setImageBase64String,
+  imageBase64String, imageData
+}) => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [isLoading, setisLoading] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [imageBase64String, setImageBase64String] = useState<string[]>([]);
-
 
   const dragging = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
@@ -116,12 +118,12 @@ export const FileInput:FC<FileInputProps> = ({onSubmit, setImageData}) => {
           }}
           disabled={isLoading}
         />
-        {!!ImageData && (
-          <button onClick={() => setIsModalOpen(true)}>View Image Text</button>
+        {!!imageData && (
+          <button onClick={() => setIsModalOpen(true)} type="button">View Image Text</button>
         )}
         <button
           type="submit"
-          disabled={!imageBase64String || isLoading || !!ImageData}
+          disabled={!imageBase64String || isLoading || !!imageData}
         >
           {isLoading ? `Reading text...` : "Convert"}
           {isLoading && <Scan size="32" className="scan__loader" />}
