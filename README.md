@@ -8,6 +8,6 @@ Future Plans:
 <br>🚀 Improve the recognition to support handwritting fonts.
 
 
-leave a star if you found thsi interesting.
+leave a star if you found this interesting.
 
 
