@@ -1,7 +1,9 @@
 import { CloseSquare, Image, Scan } from "iconsax-react";
 import { FC, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
+import { errorMessage } from "../../utils/toast";
 import { FileInputProps } from "./file-input.types";
+import './file-input.css'
 
 export const FileInput: FC<FileInputProps> = ({
   onSubmit,
@@ -9,7 +11,8 @@ export const FileInput: FC<FileInputProps> = ({
   setIsModalOpen,
   isLoading,
   setImageBase64String,
-  imageBase64String, imageData
+  imageBase64String,
+  imageData,
 }) => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
@@ -29,7 +32,12 @@ export const FileInput: FC<FileInputProps> = ({
   };
 
   const handleChange = (file: File) => {
-    if (file) getBase64(file);
+    if (file) {
+      if (!file.type.match(/image.*/)) {
+        errorMessage("kindly select an image");
+      }
+      getBase64(file);
+    }
   };
 
   const getBase64 = (myFile: File) => {
@@ -105,6 +113,7 @@ export const FileInput: FC<FileInputProps> = ({
           {!imageBase64String.length && "Browse or Drop File Here"}
         </label>
         <input
+          accept="image/*"
           name="file"
           hidden
           type="file"
@@ -119,7 +128,9 @@ export const FileInput: FC<FileInputProps> = ({
           disabled={isLoading}
         />
         {!!imageData && (
-          <button onClick={() => setIsModalOpen(true)} type="button">View Image Text</button>
+          <button onClick={() => setIsModalOpen(true)} type="button">
+            View Image Text
+          </button>
         )}
         <button
           type="submit"

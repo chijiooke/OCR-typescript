@@ -1,29 +1,67 @@
 .image__text__modal__wrapper {
-    display: flex;
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.693);
-    cursor: pointer;
-    min-width: 100vw;
-    min-height: 100vh;
-    box-sizing: border-box;
-    z-index: 5;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .image__text__modal {
-    cursor: default;
-    background-color: var(--white);
-    border-radius: 0.8rem;
-    font-size: 18px;
-    font-weight: 600;
-    text-align: center;
-    color: var(--black);
-    max-width: 800px;
-    width: 800px;
-    max-height: 80vh;
-    overflow-y: scroll;
-    padding: 1rem 2rem;
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.693);
+  cursor: pointer;
+  min-width: 100vw;
+  min-height: 100vh;
+  box-sizing: border-box;
+  z-index: 5;
+  align-items: center;
+  justify-content: center;
+}
+
+.image__text__modal {
+  cursor: default;
+  background-color: var(--white);
+  border-radius: 0.8rem;
+  font-size: 14px;
+  text-align: center;
+  color: var(--black);
+  max-width: 800px;
+  width: 800px;
+  max-height: 80vh;
+  overflow-y: scroll;
+  padding: 0.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__header{
+display: flex;
+align-items: center;
+justify-content: space-between;
+border-bottom: 1px dashed var(--softGray);
+margin-bottom: 1rem;
+}
+
+.pdf__download__btn {
+  background-color: var(--accent);
+  color: var(--white);
+}
+.pdf__download__btn:hover {
+  opacity: 0.7;
+  background-color: var(--accent);
+  color: var(--white);
+}
+
+.btn__wrapper {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  min-width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.close__modal__btn {
+  color: var(--accent);
+  cursor: pointer;
+}
+.close__modal__btn:hover {
+  opacity: 0.7;
+}
+
+span{
+  margin-top: 0.5rem;
+}

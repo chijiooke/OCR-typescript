@@ -1,12 +1,12 @@
 import axios from "axios";
-import { DocumentText, Scan } from "iconsax-react";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import heroImage from "./assets/hero3.png";
+
 import { imageData } from "./components/file-Input/file-input.types";
 import { FileInput } from "./components/file-Input/FileInput";
+import { HeroSection } from "./components/hero-section/HeroSection";
 import { Modal } from "./components/modal/Modal";
 import { errorMessage } from "./utils/toast";
 
@@ -62,7 +62,7 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <div className="app_wrapper">
       {isModalOpen && (
         <Modal
           setIsModalOpen={setIsModalOpen}
@@ -70,26 +70,7 @@ function App() {
           imageDataText={imageData?.text || ""}
         />
       )}
-      <div className="hero__section">
-        <img src={heroImage} className="hero__image" />
-        <h1 className="hero__title">
-          SKANN<span style={{ color: "red" }}>Я</span>.ocr
-        </h1>
-        <p className="hero__subtext">
-          A simple <b>image to text/pdf </b>
-          tool built with typescript and node.js
-        </p>
-        <div className="hero__value__props__wrapper">
-          <p className="hero__value_props">
-            <Scan size="32" />
-            Extract text off of images
-          </p>
-          <p className="hero__value_props">
-            <DocumentText size="32" />
-            Convert images to PDFs
-          </p>
-        </div>
-      </div>
+     <HeroSection/>
       <FileInput
         setImageBase64String={setImageBase64String}
         imageBase64String={imageBase64String}

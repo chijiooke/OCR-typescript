@@ -9,7 +9,6 @@ export const Modal: FC<ModalProps> = ({
   downloadPDF,
   imageDataText,
 }) => {
-  
   const copyToClipBoard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -19,35 +18,47 @@ export const Modal: FC<ModalProps> = ({
     }
   };
 
+  const year = new Date().getFullYear();
   return (
     <div
       className="image__text__modal__wrapper"
       onClick={() => setIsModalOpen(false)}
     >
       <div className="image__text__modal" onClick={(e) => e.stopPropagation()}>
-        <CloseCircle
-          size="32"
-          style={{ alignSelf: "end", display: "flex" }}
-          onClick={() => {
-            setIsModalOpen(false);
-          }}
-        />
+        <div className="modal__header">
+          <p> Text from yout image 😎</p>
+          <CloseCircle
+            size="24"
+            className="close__modal__btn"
+            onClick={() => {
+              setIsModalOpen(false);
+            }}
+          />
+        </div>
+
         <p>{imageDataText}</p>
-        <button
-          onClick={() => {
-            if (!!imageDataText) copyToClipBoard(imageDataText);
-          }}
-        >
-          <DocumentCopy size="32" /> Copy to clipboard
-        </button>
-        <button
-          onClick={() => {
-            downloadPDF();
-          }}
-        >
-          <DocumentDownload size="32" />
-          Download Image as PDF
-        </button>
+        <div className="btn__wrapper">
+          <button
+            onClick={() => {
+              if (!!imageDataText) copyToClipBoard(imageDataText);
+            }}
+          >
+            <DocumentCopy size="32" /> Copy to clipboard
+          </button>
+          <button
+            className="pdf__download__btn"
+            onClick={() => {
+              downloadPDF();
+            }}
+          >
+            <DocumentDownload size="32" />
+            Download Image as PDF
+          </button>
+        </div>
+        <span>
+          skannr © {year} | by  {""}
+          <a href="//chijiooke.netlify.com" target="_blank">Silva Chijioke Michael</a>
+        </span>
       </div>
     </div>
   );

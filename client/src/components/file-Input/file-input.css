@@ -1,0 +1,99 @@
+.file__input__section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom__file__upload__label {
+  border: 3px dashed var(--softGray);
+  padding: 6px 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+  width: 500px;
+  max-width: 500px;
+  padding: 2rem;
+  margin: 0;
+  border-radius: 0.5rem;
+  color: var(--black);
+}
+
+.custom__file__upload__label:hover {
+  opacity: 0.5;
+  transition: 0.4s;
+  border-color: var(--main);
+}
+
+.remove__file__btn {
+  color: var(--accent);
+  align-self: end;
+  margin-bottom: 0.5rem;
+  transition: opacity 0.6 ease-in-out;
+  background-color: transparent;
+  padding: 0;
+}
+.remove__file__btn:hover {
+  cursor: pointer;
+  opacity: 0.6;
+  background-color: transparent;
+}
+
+button {
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 0;
+  border: 0;
+  background: var(--main);
+  margin-top: 1rem;
+  box-shadow: 0 4px 30px #0000001a;
+  transition: 0.4s all;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.8;
+  box-shadow: 0 4px 30px #00000009;
+  background: var(--main);
+}
+
+button:disabled,
+button[disabled] {
+  opacity: 0.2;
+  background: var(--black);
+  cursor: not-allowed;
+}
+.scan__loader {
+  animation: skanLoaderAnimation 1s infinite;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* -------------------------------------animations ------------------------------------*/
+
+@keyframes skanLoaderAnimation {
+  0% {
+    scale: 0.8;
+    opacity: 0.4;
+  }
+  50% {
+    scale: 1;
+    opacity: 1;
+  }
+  100% {
+    scale: 0.8;
+    opacity: 0.4;
+  }
+}
