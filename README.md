@@ -10,4 +10,6 @@ Future Plans:
 
 leave a star if you found this interesting.
 
+![](https://github.com/OCR-typescript//file.gif)
+
 
