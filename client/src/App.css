@@ -2,23 +2,46 @@
   display: flex;
   height: 100vh;
   box-sizing: border-box;
+  width: 100vw;
 }
 
+.image__text__modal__wrapper {
+  display: flex;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.693);
+  /* opacity: 0.7; */
+  min-width: 100vw;
+  min-height: 100vh;
+  box-sizing: border-box;
+  z-index: 5;
+  align-items: center;
+  justify-content: center;
+}
+
+.image__text__modal {
+  background-color: var(--white);
+  border-radius: 0.8rem;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--black);
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: scroll;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
 .hero__section {
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 60%;
   padding: 2rem;
   box-sizing: border-box;
-  background: rgb(34, 193, 195);
-  /* background: linear-gradient(
-    323deg,
-    #bec9f5 0%,
-    #bec8f5 100%
-  ); */
+  background: var(--main);
 }
 .hero__section > img {
   box-shadow: inset;
@@ -27,7 +50,9 @@
   overflow: hidden;
   object-fit: cover;
   scale: 1.5;
-  position: relative;
+  /* position: relative; */
+  -webkit-filter: drop-shadow(0 4px 30px #00000030);
+  filter: drop-shadow(0 4px 30px #0000001a);
 }
 
 .hero__title {
@@ -40,16 +65,22 @@
   padding: 0;
 }
 
-@keyframes bounce {
-  0% {
-    scale: 0.8;
-  }
-  50% {
-    scale: 1;
-  }
-  100% {
-    scale: 0.8;
-  }
+.hero__value__props__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero__value_props {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  backdrop-filter: blur(5px);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .file__input__section {
@@ -60,11 +91,8 @@
   box-sizing: border-box;
 }
 
-input[type="file"] {
-  /* display: none; */
-}
 .custom__file__upload__label {
-  border: 3px dashed #ccc;
+  border: 3px dashed var(--softGray);
   padding: 6px 12px;
   cursor: pointer;
   display: flex;
@@ -77,25 +105,24 @@ input[type="file"] {
   padding: 2rem;
   margin: 0;
   border-radius: 0.5rem;
-  color: black;
+  color: var(--black);
 }
 
 .custom__file__upload__label:hover {
   opacity: 0.5;
   transition: 0.4s;
-  border-color: aqua;
+  border-color: var(--main);
 }
 
 .remove__file__btn {
-  color: red;
+  color: var(--accent);
   align-self: end;
   margin-bottom: 0.5rem;
   transition: opacity 0.6 ease-in-out;
 }
 .remove__file__btn:hover {
-cursor: pointer;
-opacity: 0.6;
-
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 button {
@@ -103,11 +130,45 @@ button {
   padding: 1rem;
   margin: 0;
   border: 0;
-  background: rgb(34, 193, 195);
+  background: var(--main);
   margin-top: 1rem;
+  box-shadow: 0 4px 30px #0000001a;
+  transition: 0.4s all;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.8;
+  box-shadow: 0 4px 30px #00000009;
+  background: var(--main);
+}
+
+.scan__loader {
+  animation: skanLoaderAnimation 1s infinite;
 }
 
 .form {
   display: flex;
   flex-direction: column;
+}
+
+/* -------------------------------------animations ------------------------------------*/
+
+@keyframes skanLoaderAnimation {
+  0% {
+    scale: 0.8;
+    opacity: 0.4;
+  }
+  50% {
+    scale: 1;
+    opacity: 1;
+  }
+  100% {
+    scale: 0.8;
+    opacity: 0.4;
+  }
 }

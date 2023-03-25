@@ -54,14 +54,30 @@ app.post("/api/process-file", (req: Request, res: Response) => {
         Buffer.from(pdf as any)
       );
 
+      // fs.readFile(
+      //   `${__dirname}/pdfs/skannr-image-to-pdf.pdf`,
+      //   (err, data) => {console.log(data)}
+      // );
+
+      console.log(pdf);
+
       res.send({
         text,
-        pdfURL: `${__dirname}/pdfs/skannr-image-to-pdf.pdf`,
+        PDF_URL: `${__dirname}/pdfs/skannr-image-to-pdf.pdf`,
+        pdf,
       });
       await worker.terminate();
     })();
     // return;
   });
+});
+
+app.get("/api/pdf-download", (req: Request, res: Response) => {
+  const contents = fs.readFileSync(
+    `${__dirname}/pdfs/skannr-image-to-pdf.pdf`,
+    { encoding: "base64" }
+  );
+  res.send(contents);
 });
 
 const PORT = process.env.PORT || 8080;
