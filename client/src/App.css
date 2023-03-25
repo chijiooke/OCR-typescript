@@ -5,33 +5,7 @@
   width: 100vw;
 }
 
-.image__text__modal__wrapper {
-  display: flex;
-  position: fixed;
-  background-color: rgba(0, 0, 0, 0.693);
-  /* opacity: 0.7; */
-  min-width: 100vw;
-  min-height: 100vh;
-  box-sizing: border-box;
-  z-index: 5;
-  align-items: center;
-  justify-content: center;
-}
 
-.image__text__modal {
-  background-color: var(--white);
-  border-radius: 0.8rem;
-  font-size: 18px;
-  font-weight: 600;
-  text-align: center;
-  color: var(--black);
-  max-width: 800px;
-  max-height: 80vh;
-  overflow-y: scroll;
-  padding: 1rem 2rem;
-  display: flex;
-  flex-direction: column;
-}
 .hero__section {
   height: 100%;
   width: 100%;
@@ -119,10 +93,13 @@
   align-self: end;
   margin-bottom: 0.5rem;
   transition: opacity 0.6 ease-in-out;
+  background-color: transparent;
+  padding: 0;
 }
 .remove__file__btn:hover {
   cursor: pointer;
   opacity: 0.6;
+  background-color: transparent;
 }
 
 button {
@@ -147,6 +124,12 @@ button:hover {
   background: var(--main);
 }
 
+button:disabled,
+button[disabled] {
+  opacity: 0.2;
+  background: var(--black);
+  cursor: not-allowed;
+}
 .scan__loader {
   animation: skanLoaderAnimation 1s infinite;
 }

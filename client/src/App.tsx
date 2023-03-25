@@ -1,48 +1,28 @@
+import axios from "axios";
+import { CloseSquare, DocumentText, Image, Scan } from "iconsax-react";
 import { useState } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import heroImage from "./assets/hero3.png";
-import { CloseSquare, DocumentText, Image, Scan, Windows } from "iconsax-react";
-import axios from "axios";
+import { Modal } from "./components/modal/Modal";
+import { errorMessage, successMessage } from "./utils/toast";
 
 function App() {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isLoading, setisLoading] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [ImageData, setImageData] = useState<{
     text: string;
     PDF_URL: string;
     pdf: BlobPart[];
   } | null>();
   const [imageBase64String, setImageBase64String] = useState<string[]>([]);
-  const dragging = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  };
-  const cancelDragging = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-  };
+ 
 
-  const isInputActive = () => {
-    if (isDragging || !!imageBase64String.length) return true;
-  };
 
-  const getBase64 = (myFile: File) => {
-    var reader = new FileReader();
-    reader.readAsDataURL(myFile);
-    reader.onload = function () {
-      reader.result &&
-        setImageBase64String(reader.result?.toString().split(","));
-    };
-    reader.onerror = function (error) {
-      console.log("Error: ", error);
-    };
-  };
 
-  const handleChange = (file: File) => {
-    if (file) getBase64(file);
-  };
+  
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,37 +37,26 @@ function App() {
         .then((res) => {
           setisLoading(false);
           setImageData(res.data);
+          setIsModalOpen(true);
         })
-        .catch((err) => {});
+        .catch((err) =>
+          errorMessage("error reading text from image, try again")
+        );
     } catch (err) {
     } finally {
       setisLoading(false);
     }
   };
 
-  const download = async () => {
+
+
+  const downloadPDF = async () => {
     try {
       await axios
         .get(`http://localhost:8080/api/pdf-download`)
         .then((res) => {
-          //  console.log(res.data)
-          //  const url = window.URL.createObjectURL(
-          //           new Blob(res.data, {
-          //             type: "application/pdf",
-          //           })
-          //         );
-
-          // const linkSource = `data:application/pdf;base64,${res}`;
-          // const downloadLink = document.createElement("a");
-          // const fileName = "abc.pdf";
-          // downloadLink.href = linkSource;
-          // downloadLink.download = fileName;
-          // downloadLink.click();
-          // console.log(res)
-
           const link = document.createElement("a");
           link.href = `data:application/pdf;base64,${res.data}`;
-
           console.log(link.href);
           link.setAttribute("download", "skanner.pdf");
           link.rel = "noreferrer";
@@ -95,7 +64,7 @@ function App() {
           document.body.appendChild(link);
           link.click();
         })
-        .catch((err) => {});
+        .catch((err) => errorMessage("pdf download failed, try again"));
     } catch (err) {
     } finally {
     }
@@ -103,26 +72,13 @@ function App() {
 
   return (
     <div className="app">
-      {ImageData && (
-        <div className="image__text__modal__wrapper">
-          <div className="image__text__modal">
-            <CloseSquare
-              size="32"
-              style={{ alignSelf: "end", display: "flex" }}
-              onClick={() => {
-                setImageData(null);
-              }}
-            />
-            <p>{ImageData.text}</p>
-            <button
-              onClick={() => {
-                download();
-              }}
-            >
-              Download PDF
-            </button>
-          </div>
-        </div>
+      {isModalOpen && (
+        <Modal
+          setIsModalOpen={setIsModalOpen}
+          downloadPDF={downloadPDF}
+         
+          imageDataText={ImageData?.text || ""}
+        />
       )}
       <div className="hero__section">
         <img src={heroImage} className="hero__image" />
@@ -151,14 +107,16 @@ function App() {
           encType="multipart/form-data"
         >
           {imageBase64String.length && (
-            <CloseSquare
-              size="32"
+            <button
               className="remove__file__btn"
               onClick={() => {
                 setIsDragging(false);
                 setImageBase64String([]);
+                setImageData(null);
               }}
-            />
+            >
+              Remove Image <CloseSquare size="32" />
+            </button>
           )}
           <label
             htmlFor="file-upload"
@@ -215,12 +173,21 @@ function App() {
             }}
             disabled={isLoading}
           />
-          <button type="submit" disabled={isLoading}>
+          {!!ImageData && (
+            <button onClick={() => setIsModalOpen(true)}>
+              View Image Text
+            </button>
+          )}
+          <button
+            type="submit"
+            disabled={!imageBase64String || isLoading || !!ImageData}
+          >
             {isLoading ? `Reading text...` : "Convert"}
             {isLoading && <Scan size="32" className="scan__loader" />}
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 }
