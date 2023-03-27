@@ -12,7 +12,6 @@ app.use(cors());
 // file size limit to manage overload
 app.use(express.json({ limit: "50mb" }));
 
-
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello, welcome to skannr OCR. A simple Image to text/PDF tool");
 });
