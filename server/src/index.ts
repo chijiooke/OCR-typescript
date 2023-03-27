@@ -50,31 +50,23 @@ app.post("/api/process-file", (req: Request, res: Response) => {
 
       // create pdf, store file on local disk and send response with pdf URl and image text
       fs.writeFileSync(
-        `${__dirname}/pdfs/skannr-image-to-pdf.pdf`,
+        `${__dirname}/generated-pdfs/skannr-image-to-pdf.pdf`,
         Buffer.from(pdf as any)
       );
 
-      // fs.readFile(
-      //   `${__dirname}/pdfs/skannr-image-to-pdf.pdf`,
-      //   (err, data) => {console.log(data)}
-      // );
-
-      console.log(pdf);
-
       res.send({
         text,
-        PDF_URL: `${__dirname}/pdfs/skannr-image-to-pdf.pdf`,
+        PDF_URL: `${__dirname}/generated-pdfs/skannr-image-to-pdf.pdf`,
         pdf,
       });
       await worker.terminate();
     })();
-    // return;
   });
 });
 
 app.get("/api/pdf-download", (req: Request, res: Response) => {
   const contents = fs.readFileSync(
-    `${__dirname}/pdfs/skannr-image-to-pdf.pdf`,
+    `${__dirname}/generated-pdfs/skannr-image-to-pdf.pdf`,
     { encoding: "base64" }
   );
   res.send(contents);
