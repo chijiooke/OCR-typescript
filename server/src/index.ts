@@ -1,9 +1,6 @@
 import cors from "cors";
 import * as dotenv from "dotenv";
 import express, { Request, Response } from "express";
-import fs from "fs";
-import path from "path";
-import { processFileController } from "./controllers/processFileController";
 import { downloadPDFRoutes } from "./routes/downloadPDFRoutes";
 import { processFileRoutes } from "./routes/processFileRoutes";
 
