@@ -24,7 +24,6 @@ function App() {
     try {
       await axios
         .post(`http://localhost:8080/api/process-file`, {
-          fileName: imageBase64String[0],
           base64IMG: imageBase64String[1],
         })
         .then((res) => {
