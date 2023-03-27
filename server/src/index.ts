@@ -13,8 +13,6 @@ app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 
 
-// app.use('/static', express.static(path.join(__dirname, 'views')))
-
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello, welcome to skannr OCR. A simple Image to text/PDF tool");
 });
